@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Absensi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="user_style.css">
+    <link rel="icon" type="image/x-icon" href="dwisaka.png">
+   <!--tak gabung sama file cooldown--> <link href="cooldown.html"><!--end-->
+</head>
+<body>
+  <!--  <header>
+        <nav class="navbar">
+            <ul class="nav-ul">
+                <a href="user.html">Home</a>
+                <a href="info.html">Info</a>
+                <a href="#">Scan</a>
+                <a href="form.html">Form</a>
+            </ul>
+        </nav>
+     </header>-->
+
+     <main>
+        <article>
+            <h1 class="scan-h1">Scan QR Code</h1>
+        </article>
+
+        <div class="scan-div"></div>
+
+
+<!--Kode dari qr_scan.html-->
+    <div id="qr-reader" style="width: 300px;"></div>
+
+    <div id="result">
+        <span id="success-message"></span>
+        <span id="error-message"></span>
+    </div> 
+     </main>
+
+     <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            // Process the scanned QR code
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
+    
+            // Send the QR data to the server for validation
+            fetch('/validate_qr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ qr_data: decodedText })  // Send the scanned QR code data
+            })
+            .then(response => response.json())
+            .then(data => {
+                const successMessage = document.getElementById("success-message");
+                const errorMessage = document.getElementById("error-message");
+                successMessage.innerHTML = "";
+                errorMessage.innerHTML = "";
+    
+                if (data.success) {
+                    successMessage.innerHTML = "QR Code valid! Redirecting to check-in page...";
+                    // Redirect to the check-in page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/checkin';
+                    }, 2000);
+                } else {
+                    errorMessage.innerHTML = "Invalid QR Code. Please try again.";
+                }
+            })
+            .catch(error => {
+                console.error('Error validating QR Code:', error);
+                document.getElementById('error-message').innerHTML = "Error validating QR Code. Please try again.";
+            });
+        }
+    
+        function onScanFailure(error) {
+            // Handle scan failure
+            console.warn(`Code scan error = ${error}`);
+        }
+    
+        // Initialize the QR code scanner
+        const html5QrCode = new Html5Qrcode("qr-reader");
+    
+        const qrConfig = { fps: 24, qrbox: 160 }; // Configure frame per second and box size
+        html5QrCode.start(
+            { facingMode: "environment" }, // Use back camera
+            qrConfig,
+            onScanSuccess,
+            onScanFailure
+        ).catch(err => {
+            console.log(`Unable to start scanning: ${err}`);
+        });
+    </script> 
+<!--kode dari qr_scan.html-->
+
+</body>
+</html>

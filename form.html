@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Absensi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="user_style.css">
+<link rel="icon" type="image/x-icon" href="dwisaka.png">
+</head>
+<body>
+   <!-- <header>
+        <nav class="navbar">
+            <ul class="nav-ul">
+                <a href="user.html">Home</a>
+                <a href="info.html">Info</a>
+                <a href="scan.html">Scan</a>
+                <a href="#">Form</a>
+            </ul>
+        </nav>
+     </header>-->
+
+<!--beberapa kode diambil dari checkin.html-->
+     <main>
+        <div class="attendance-form">
+       <h1 class="form-h1">Attendance Form</h1>
+        </div>
+
+        <form class="main-form" action="/submit_checkin" method="POST">
+          <div class="nama">
+            <label for="text-name">Name</label>
+            <input id="text-name" type="text" placeholder="Name" required>
+         </div>
+
+         <div class="class">
+            <label for="text-class">Class</label>
+            <input id="text-class" type="text" placeholder="Kelas" required>
+         </div>
+
+         <div class="absent">
+            <label for="text-absent">Absen</label>
+            <input id="text-absent" type="number" placeholder="Absen" required>
+         </div>
+          
+         <div class="NIS">
+            <label for="text-nis">NIS</label>
+            <input id="text-nis" type="number" placeholder="NIS" required>
+         </div>
+         
+       <button class="form-button" type="submit">Kirim</button>
+        </form>
+         
+     </main>
+</body>
+</html>
